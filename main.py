@@ -12,11 +12,13 @@ proc = ImagePostprocessor()
 
 
 if __name__ == "__main__":
-    samples = os.listdir(SAMPLES_DIR)
-    for sample in (s for s in samples if s not in ESCAPE_FILES):
+    images = os.listdir(SAMPLES_DIR)
+    for image_fname in images:
+        if image_fname in ESCAPE_FILES: continue
+
         processed_image = None
-        with open(f"./{SAMPLES_DIR}/{sample}", "rb") as file:
+        with open(f"./{SAMPLES_DIR}/{image_fname}", "rb") as file:
             processed_image = proc.add_watermark(file.read(), False)
 
-        with open(f"./{OUTPUT_DIR}/{sample}", "wb") as file:
+        with open(f"./{OUTPUT_DIR}/{image_fname}", "wb") as file:
             file.write(processed_image)
